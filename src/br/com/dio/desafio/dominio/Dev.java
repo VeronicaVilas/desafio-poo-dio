@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Dev {
     private String nome;
+    private int cpf;
     private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
     private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
 
@@ -13,12 +14,13 @@ public class Dev {
     }
 
     public void progredir() {
-        Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
-        if(conteudo.isPresent()) {
-            this.conteudosConcluidos.add(conteudo.get());
-            this.conteudosInscritos.remove(conteudo.get());
+        if (!conteudosInscritos.isEmpty()) {
+            Conteudo proximoConteudo = conteudosInscritos.iterator().next();
+            conteudosInscritos.remove(proximoConteudo);
+            conteudosConcluidos.add(proximoConteudo);
+            System.out.println("Você progrediu no curso: " + proximoConteudo.getTitulo());
         } else {
-            System.err.println("Você não está matriculado em nenhum conteúdo!");
+            System.err.println("Você não está matriculado em nenhum curso!");
         }
     }
 
@@ -44,6 +46,14 @@ public class Dev {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(int cpf) {
+        this.cpf = cpf;
     }
 
     public Set<Conteudo> getConteudosInscritos() {
